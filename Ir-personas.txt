@@ -1,0 +1,7 @@
+
+
+Las personas participantes son:
+ 1) Manuel Sarmiento Soto: Nuestro cliente, Doctor e investigador adscrito por convenio.
+ 2) Maria Teresa Sánchez Montero: Quien nos introdujo a Manuel e hizo de intermediaria. 
+ 3) Los integrantes del laboratorio: Quienes le daran uso a la aplicación. 
+ 4) Nosotros: Como desarrolladores del sistema.
