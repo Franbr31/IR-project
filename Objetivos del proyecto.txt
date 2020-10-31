@@ -1,0 +1,15 @@
+Incorporar un sistema de gestión más avanzado
+
+Informar acerca del estado el stock del laboratorio
+
+Informar acerca de los pedidos realizados por el laboratorio
+
+Informar acerca de los proveedores con los que el laboratorio contacta
+
+Informar acerca de los usuarios del laboratorio
+
+Informar acerca de los proyectos existentes en el laboratorio
+
+Reducir el número de problemas relacionados con los demás objetivos en el laboratorio
+
+Agilizar las tareas referidas a estos objetivos
