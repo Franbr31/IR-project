@@ -1,0 +1,17 @@
+-----------------------------------------------------------------------------------------------------------------
+Actores de negocio actuales:
+
+El actor de negocio miembro de proyecto representa a aquellas personas que pertenecen a algún proyecto del laboratorio
+para llevar a cabo las investigaciones y los experimentos de este y para anotar los productos que necesita el proyecto. 
+Puede ser un investigador junior de Máster, Grado o Doctorado o un investigador senior 
+
+El actor de negocio coordinador de proyecto representa a aquellas personas que están a cargo de algún proyecto del
+laboratorio, para gestionar los experimentos, el presupuesto y contactar con el jefe de laboratorio cuando un experimento
+del proyecto requiere de cierto inventario.(Al igual que los miembros del proyecto, también lleva a cabo los experimentos). Puede ser profesor
+titular o un profesor contratado a doctor.
+
+El actor de negocio jefe de laboratorio representa a aquella persona que es máximo responsable del laboratorio del Departamento de 
+Bioquímica y Biología Molecular, quien contacta con los proveedores a los que se les encargan los pedidos y coordina
+todos los proyectos. Este rol sólo puede ocuparlo el catedrático.
+
+--(¿Actor de negocio que se encarga de supervisión de investigadores junior?)-----------------------------------
