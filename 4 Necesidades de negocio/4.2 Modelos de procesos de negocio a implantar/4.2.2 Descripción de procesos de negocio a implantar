@@ -1,0 +1,23 @@
+Si un usuario quisiera revisar los productos en el stock, tendría que, en la aplicación, abrir la opción de productos, y en ella revisar los distintos
+productos que existen. El usuario puede buscar el producto por nombre, filtrar por técnica en la que se emplee, y si es un reactivo (algún ácido por ejemplo),
+o un fungible (guantes de plástico por ejemplo). A partir de aquí, el usuario, una vez localizado el producto, puede acceder a su información, viendo
+cuanto porcentaje le queda en total respecto al 100% que ellos decidieron, si es un producto peligroso, el nombre del producto, etc. Además, puede acceder
+a una lista de ejemplares de ese producto, donde se ve cuanto le queda a cada uno (los mililitros que le queden a un bote de ácido por ejemplo) o su
+fecha de caducidad, si tuviera. Desde aquí también se puede actualizar cada uno de los ejemplares, ya sea reduciendo o aumentando su cantidad, o incluso
+añadir uno nuevo o borrar uno ya existente.
+
+Si un usuario quiere actualizar la cantidad que quedase de un producto, tendría que acceder a la sección de productos, seleccionar el producto 
+correspondiente, y acceder a sus ejemplares. Una vez ahí, debe buscar el ejemplar que ha usado (que estará identificado por un código), y cambiar su cantidad, 
+o incluso borrarlo de la tabla si se hubiese gastado entero. De igual forma, si quisiera añadir un ejemplar nuevo, el procedimiento sería similar, sólo 
+cambiaría el hecho de que tiene que añadir un ejemplar nuevo en lugar de actualizar uno existente o borrarlo.
+
+Si un administrador quiere alterar el número de técnicas, debe dirigirse a la sección de técnicas en la aplicación, y una vez ahí, puede borrar la técnica
+haciendo click en el botón correspondiente, o añadir una nueva de la misma forma. La única funcionalidad que tienen las técnicas son para filtrar los 
+productos.
+
+Si un usuario quiere revisar los usuarios actualmente existentes, debe dirigirse a la sección de usuarios en la aplicación, donde le aparecerá un listado
+de los usuarios registrados en la aplicación. Puede buscar por nombre o apodo. Si seleccionase un usuario, puede acceder a su página, donde habrá más
+información de él o ella, como su nombre completo, una descripción, una foto de perfil, etc.
+
+Cuando un usuario quiere iniciar sesión en la aplicación, tiene que entrar en ella, y al no haber iniciado ya, se le enviaría a la página de inicio, donde tendría 
+que escribir su nombre de usuario y su contraseña y pulsar en el boton Entrar.
