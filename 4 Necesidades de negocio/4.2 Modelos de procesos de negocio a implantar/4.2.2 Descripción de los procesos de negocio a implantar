@@ -19,7 +19,15 @@
    eliminandose también de forma automática la alerta asociada a dicho ejemplar.
 
 
+-Hacer pedido:
 
+Cuando un usuario consume un producto, introduce la cantidad del mismo que ha tomado. La aplicación, entonces, actualiza el stock disponible. 
+Si la cantidad restante no está por debajo del porcentaje de alerta, se termina el proceso.
+Si, por el contrario, queda menos que el porcentaje de alerta, la aplicación generará alertas. 
+Al recibir la alerta, el usuario buscará un proveedor al que encargar el producto que falta para reponer su stock. 
+Tras los filtros correspondientes, la aplicación devolverá al usuario los detalles de los proveedores que más se ajustan a su situación. El usuario
+escogerá uno y contactará con él.
+Tras confirmar el pedido, el usuario bajará el nivel de la alerta e introducirá el nuevo pedido en la sección de pedidos. La alerta se actualiza y termina el proceso.
 
 
 
