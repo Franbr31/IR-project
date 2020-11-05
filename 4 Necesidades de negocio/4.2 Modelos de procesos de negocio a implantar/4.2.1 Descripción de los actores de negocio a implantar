@@ -1,4 +1,7 @@
--	Usuario: Un usuario es la persona que tiene acceso a las características básicas de la aplicación. Es decir, que puede consultar todos los datos de pedidos, proyectos, productos y todo lo incluido en la aplicación, e incluso puede crear nuevos y editar los actuales, pero no tiene permisos extras, como por ejemplo el de eliminar a otro usuario, ya que esto estaría reservado al administrador de la aplicación.
--	Administrador: Este rol tiene todas las características de un usuario corriente, pero además tiene el poder de eliminar a otros usuarios, eliminar productos y añadir o eliminar técnicas. 
--	Coordinador de proyecto: Este rol puede asignarse a cualquier usuario en el proyecto del que sea jefe. Al adquirir el rol de jefe en un proyecto determinado, la persona podría gestionar todos los detalles del proyecto, incluyendo los integrantes de este. 
--	Integrante de proyecto: Al igual que el coordinador, este rol se asigna a un usuario normal en u proyecto determinado. Al ser integrante, no se pueden editar los detalles del proyecto, pero sí se pueden consultar todos los datos almacenados, ya que algunos, como el presupuesto, estarían ocultos para las personas que no forman parte del proyecto. 
+-	Usuario: Integrante del laboratorio que interactuará con la aplicación
+- Laboratorio US: Sistema de información que desarrollaremos para la gestión del laboratorio
+- Alertas: Componente de la aplicación que genera notificaciones automáticamente cuando se dan las circunstancias para que se genere
+- Proveedores: Personas u organizaciones externas al laboratorio que proporciona los productos al laboratorio
+
+
+Integrante, Laboratorio US, Alertas, Proveedores
