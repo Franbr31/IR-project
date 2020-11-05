@@ -1,5 +1,12 @@
+Usuario: Integrante del laboratorio que participa en los experimentos
+Proveedores: Personas u organizaciones externas al laboratorio que proporciona los productos al laboratorio
+Entidad financiera: Organización o particular que apoya económicamente a los proyectos
+
+
+
+-------------------------------------------
 -----------------------------------------------------------------------------------------------------------------
-Actores de negocio actuales:
+LEGACY NOTES 
 
 El actor de negocio miembro de proyecto representa a aquellas personas que pertenecen a algún proyecto del laboratorio
 para llevar a cabo las investigaciones y los experimentos de este y para anotar los productos que necesita el proyecto. 
