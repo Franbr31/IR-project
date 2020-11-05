@@ -1,3 +1,38 @@
+
+-Recibir pedido:
+   
+   El proveedor  envía el pedido al laboratorio. Algún integrante del laboratorio almacena fisicamente el producto. 
+   En la página el usuario marca el pedido como llegado y actualiza la cantidad del producto que ha recibido incrementando o decrementando
+   la cantidad que tenía en ese momento. Si la cantidad que queda del producto supera el porcentaje de alerta determinado para este,
+   se elimina la alerta de manera automática.
+
+-Actualizar presupuesto proyecto:
+   
+   Algún integrante del proyecto modifica su presupuesto . Actualiza su valor en la página y, en caso de que el presupuesto restante
+   quedase por debajo del 20%, salta de manera automática una alerta que notifica de esto al usuario.
+   
+   
+-Caducidad ejemplar:
+   
+   En la página, automáticamente, se comprueba de manera diaria si existe algún ejemplar caducado. En caso de que exista alguno,
+   se genera una alerta que notifica al usuario, este localiza el ejemplar en el sistema y lo retira (tanto fisicamente como de la base de datos),
+   eliminandose también de forma automática la alerta asociada a dicho ejemplar.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 Si un usuario quisiera revisar los productos en el stock, tendría que, en la aplicación, abrir la opción de productos, y en ella revisar los distintos
 productos que existen. El usuario puede buscar el producto por nombre, filtrar por técnica en la que se emplee, y si es un reactivo (algún ácido por ejemplo),
 o un fungible (guantes de plástico por ejemplo). A partir de aquí, el usuario, una vez localizado el producto, puede acceder a su información, viendo
