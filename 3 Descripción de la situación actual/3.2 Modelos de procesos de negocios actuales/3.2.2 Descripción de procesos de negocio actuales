@@ -4,6 +4,31 @@
    Algún integrante del laboratorio consume un cierto producto. Después comprueba si queda poca cantidad de dicho producto. 
    Si está en ese caso, busca en internet los posibles proveedores y cuando se decida por alguno, contacta con él. Una vez 
    que se realiza el pedido, se anota el suceso en una libreta común.
+   
+-Recibir un pedido:
+   
+   La recepción de un pedido comienza cuando el repartidor de la empresa de paquetería llega al laboratorio y entrega el pedido
+   a algún usuario que esté en ese momento en el laboratorio. Esta persona, debe apuntar en la libreta que se ha recibido el 
+   pedido y editar la cantidad de los productos recibidos. Tras esto, el usuario irá al almacén a guardar los productos en 
+   su lugar correspondiente.
+   
+-Caducidad de un ejemplar:
+   
+   Cuando un usuario del laboratorio va a usar un producto, si ve que el ejemplar está caducado, se debe deshacer de él y cambia
+   la cantidad total de dicho producto en la libreta.
+   
+-Actualizar el presupuesto de un proyecto:
+
+   Para actualizar el presupuesto de un proyecto, los integrantes de cada uno tienen una libreta donde se apuntan los gastos cargados
+   a nombre de este, con lo cual, el proceso de actualización de un presupuesto, comienza cuando algún integrante realiza un gasto
+   a nombre de un proyecto y lo apunta en la libreta. Tras apuntarlo, hay dos opciones, ya que si queda poco del presupuesto total y
+   se necesita más, se debería enviar una petición a la entidad que lo financia para ampliar el presupuesto, y si la acepta actualizar
+   el proyecto total en la libreta. En caso de que quede aún una gran parte del total o que no sea necesario más, se termina el proceso 
+   tras apuntar el gasto en la libreta.
+
+
+   
+
 
 
 
