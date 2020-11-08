@@ -1,0 +1,4 @@
+- US: Universidad de Sevilla
+- PCR:Polymerase Chain Reaction (Reacción en Cadena de la Polimerasa en español)
+- ADN:ácido desoxirribonucleico
+- BPMN:Business Process Model and Notation
