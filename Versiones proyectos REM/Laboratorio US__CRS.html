@@ -1,0 +1,556 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="iso-8859-1" />
+<meta name="generatedBy" content="REMUS (REM 1.3)" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/amador-duran-toro/remus/assets/stylesheets/remus.css" />
+<title>Proyecto Laboratorio US</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.0.2/showdown.js"></script>
+<script>
+            // showdown 1.0.2 (supported in IE 7 without es5-shim)
+            // Usage
+            // var result = converter.makeHtml(text);
+            // converter.setOption( "key", "value" );
+
+            var converter = new showdown.Converter();
+
+            // function to be used in XLST templates
+            // if inline=true, all CRLF tags are replaced
+            // by spaces to avoid internal <p>..</p> and
+            // the enclosing <p>..</p> (if any) is discarded.
+
+            function generate_markdown( id, inline )
+            {
+                // optional parameter
+                if ( inline === undefined ) {
+                    inline = false;
+                }
+
+                var md_id   = id + "-md";
+                var html_id = id + "-html";
+
+                var md_container   = document.getElementById( md_id );
+                var html_container = document.getElementById( html_id );
+
+                var md_text = md_container.value;
+
+                md_container.value = "remus_text = " + md_text; // for debugging
+
+                // Simple text replace can be performed using split and join faster
+                // than using replace with a regular expression as described in:
+                // https://dmitripavlutin.com/replace-all-string-occurrences-javascript/
+
+                /* no internal <p>...</p> in inline mode */
+                var newline = inline ? " " : "\n";
+                var two_newlines = newline + newline;
+
+                var crlf_tag             = "¬";
+                var two_crlf_tags        = crlf_tag + crlf_tag;
+                var three_spaces_newline = "   " + newline;
+                var reg_exp = new RegExp( "(" + crlf_tag + ")(?!(\\d\\.)|\\*|\\+|\\-|\\<)", 'g' );
+
+                // if ( inline )
+                //      replace all CRLF by spaces
+                // else
+                //      replace all CRLF+CRLF into \n\n
+                //      replace all CRLF not followed by *,+,-,&gt; or a digit+period into 3 spaces + \n
+                //      replace all remaining CRLF into \n
+                // endif
+                //
+                // try regular expressions at: https://regexr.com/
+
+                if ( inline ) {
+                    md_text = md_text.split( crlf_tag ).join( newline );
+                }
+                else {
+                    md_text = md_text.split( two_crlf_tags ).join( newline + newline );
+                    md_text = md_text.replace( reg_exp, three_spaces_newline + "$2" );
+                    md_text = md_text.split( crlf_tag ).join( newline );
+                }
+
+                md_container.value += "\n\nmd_text = " + md_text; // for debugging
+
+                // Don't get rid of enclosing <p>...</p> in paragraph mode,
+                // double \n inside markdown will close the first <p> generating an
+                // unbalanced </p> later and wrong html that will raise an
+                // error when assigned to innerHTML.
+
+                var html_text = converter.makeHtml( md_text );
+
+                if ( inline ) {
+                    // get rid of enclosing <p>...</p> (if any)
+                    // warning: generated item lists are not inside <p>...</p>
+                    // length("<p>") == 3, length("</p>") == 4
+                    if ( html_text.indexOf("<p>")       == 0 &&
+                         html_text.lastIndexOf("</p>")  == html_text.length - 4 )
+                    {
+                        html_text = html_text.slice( 3, -4 );
+                    }
+                }
+
+                md_container.value += ("\n\nhtml_text = " + html_text); // for debugging
+
+                html_container.innerHTML = html_text;
+            }
+
+            // array for user warnings
+            var warnings = new Array();
+        </script>
+</head>
+<body>
+<div id="warning_container" class="ui-widget">
+<span id="warning_title">Avisos</span>
+<div id="warning_messages"></div>
+</div>
+<div id="document_cover">
+<div id="browser_info">
+<script>
+                document.write( navigator.userAgent + "<br />" );
+                for( var opt in converter.getOptions() ) {
+                    document.write( "local option : " + opt + " = " + converter.getOption(opt) + "<br />" );
+                }
+                for( var opt in showdown.getOptions() ) {
+                    document.write( "global option : " + opt + " = " + showdown.getOption(opt) + "<br />" );
+                }
+            </script>
+</div>
+<div id="project_name">Proyecto Laboratorio US</div>
+<div id="document_logo">
+<img alt="Universidad de Sevilla" src="https://cdn.jsdelivr.net/gh/amador-duran-toro/rem/assets/images/logo_us.gif" />
+</div>
+<div id="document_name">Documento de Requisitos del Sistema [MadejaIR] Laboratorio US</div>
+<div id="document_version">Versión 1.0</div>
+<div id="document_date">Fecha 07/11/2020</div>
+<div id="document_prepared_for">Preparado para:<p>
+<a href="#ORG-0001">Laboratorio de la US</a>
+</p>
+</div>
+<div id="document_prepared_by">Preparado por:<p>
+<a href="#ORG-0002">Aleatorio US (Nosotros)</a>
+</p>
+</div>
+</div>
+<div class="pagebreak"></div>
+<nav id="toc" role="navigation">
+<h1>Índice</h1>
+<ul class="toc_list toc_list_level_1">
+<li>1 <a href="#SEC-0001">Introducción</a></li>
+<ul class="toc_list">
+<li>1.1 <a href="#SEC-0002">Alcance del proyecto</a></li>
+<li>1.2 <a href="#SEC-0003">Participantes en el proyecto</a></li>
+<ul class="toc_list">
+<li>1.2.1 <a href="#SEC-0004">Organizaciones participantes</a></li>
+<li>1.2.2 <a href="#SEC-0005">Personas participantes</a></li>
+</ul>
+</ul>
+<li>2 <a href="#SEC-0006">Información sobre el dominio del problema</a></li>
+<ul class="toc_list">
+<li>2.1 <a href="#SEC-0007">Introducción al dominio del problema</a></li>
+<li>2.2 <a href="#SEC-0008">Glosario de términos del dominio del problema</a></li>
+</ul>
+<li>3 <a href="#SEC-0009">Descripción de la situación actual</a></li>
+<ul class="toc_list">
+<li>3.1 <a href="#SEC-0010">Pros y contras de la situación actual</a></li>
+<ul class="toc_list">
+<li>3.1.1 <a href="#SEC-0011">Fortalezas de la situación actual</a></li>
+<li>3.1.2 <a href="#SEC-0012">Debilidades de la situación actual</a></li>
+</ul>
+<li>3.2 <a href="#SEC-0013">Modelos de proceso de negocio actuales</a></li>
+<ul class="toc_list">
+<li>3.2.1 <a href="#SEC-0014">Descripción de actores de negocio actuales</a></li>
+<li>3.2.2 <a href="#SEC-0015">Descripción de procesos de negocio actuales</a></li>
+</ul>
+<li>3.3 <a href="#SEC-0016">Entorno tecnológico actual</a></li>
+<ul class="toc_list">
+<li>3.3.1 <a href="#SEC-0022">Descripción del entorno hardware actual</a></li>
+<li>3.3.2 <a href="#SEC-0023">Descripción del entorno software actual</a></li>
+</ul>
+</ul>
+<li>4 <a href="#SEC-0017">Necesidades de negocio</a></li>
+<ul class="toc_list">
+<li>4.1 <a href="#SEC-0018">Objetivos de negocio</a></li>
+<li>4.2 <a href="#SEC-0019">Modelos de procesos de negocio a implantar</a></li>
+<ul class="toc_list">
+<li>4.2.1 <a href="#SEC-0020">Descripción de actores de negocio a implantar</a></li>
+<li>4.2.2 <a href="#SEC-0021">Descripción de procesos de negocio a implantar</a></li>
+</ul>
+</ul>
+<li>A <a href="#SEC-0024">Actas de reunión</a></li>
+<ul class="toc_list">
+<li>A.A <a href="#SEC-0025">Primera reunión</a></li>
+<li>A.B <a href="#SEC-0026">Reunión 2020</a></li>
+</ul>
+<li>B <a href="#SEC-0027">Documentación relevante</a></li>
+<ul class="toc_list">
+<li>B.A <a href="#SEC-0032">Correo de Manuel Sarmiento</a></li>
+<li>B.B <a href="#SEC-0028">Documento de esperanzas de cambios</a></li>
+<ul class="toc_list">
+<li>B.B.A <a href="#SEC-0029">Introducción</a></li>
+<li>B.B.B <a href="#SEC-0030">Situación Actual</a></li>
+<li>B.B.C <a href="#SEC-0031">Situación futura</a></li>
+</ul>
+</ul>
+<li>C <a href="#SEC-0033">Glosario de acrónimos y abreviaturas</a></li>
+</ul>
+</nav>
+<div class="pagebreak"></div>
+<h1 id="SEC-0001" class="section">1 Introducción</h1>
+<h2 id="SEC-0002" class="section">1.1 Alcance del proyecto</h2>
+<div id="PRG-0001">
+<textarea id="PRG-0001-text-md" class="markdown">Nuestro proyecto es sobre un laboratorio de la Universidad de Sevilla, que se encuentra en la Facultad de Farmacia. En el laboratorio, el problema principal es el de gestión de inventario, que va a ser en el que nos centraremos en el proyecto. En el almacén se guardan todos los productos que se necesitan para la realización de los experimentos, como productos químicos o herramientas para su manipulación. El problema es que estos productos simplemente se apuntan en una libreta, todo a mano, y esto se va a cambiar por una aplicación. ¬¬Además, vamos a añadir otro tipo de información que los integrantes del laboratorio no tienen fácilmente accesible, como son los usuarios del laboratorio, los proyectos activos, las técnicas utilizadas, los pedidos que están en camino y los proveedores de los diferentes productos. Además, implementaremos un sistema de alertas para facilitar a los usuarios saber los problemas del laboratorio en cada momento.</textarea>
+<div id="PRG-0001-text-html" class=""></div>
+<script>generate_markdown("PRG-0001-text");</script>
+</div>
+<h2 id="SEC-0003" class="section">1.2 Participantes en el proyecto</h2>
+<h3 id="SEC-0004" class="section">1.2.1 Organizaciones participantes</h3>
+<div id="PRG-0003">
+<textarea id="PRG-0003-text-md" class="markdown">- Laboratorio de farmacia: Laboratorio pertenenciente al departamento de biología y bioquímica molecular de la facultad de farmacia de la US. Son los clientes para los que vamos a desarrollar la aplicación.¬- Aleatorio US (nosotros): Equipo de estudiantes de la asignatura IR (grado IISW de la US), encargados de desarrollar la aplicación para el laboratorio.</textarea>
+<div id="PRG-0003-text-html" class=""></div>
+<script>generate_markdown("PRG-0003-text");</script>
+</div>
+<h3 id="SEC-0005" class="section">1.2.2 Personas participantes</h3>
+<div id="PRG-0004">
+<textarea id="PRG-0004-text-md" class="markdown">Las personas participantes son:¬¬- Manuel Sarmiento Soto: Nuestro cliente, Doctor e investigador adscrito por convenio.¬- Maria Teresa Sánchez Montero: Quien nos introdujo a Manuel e hizo de intermediaria. ¬- Los integrantes del laboratorio: Quienes le daran uso a la aplicación. ¬- Nosotros: Como desarrolladores del sistema.¬</textarea>
+<div id="PRG-0004-text-html" class=""></div>
+<script>generate_markdown("PRG-0004-text");</script>
+</div>
+<h1 id="SEC-0006" class="section">2 Información sobre el dominio del problema</h1>
+<h2 id="SEC-0007" class="section">2.1 Introducción al dominio del problema</h2>
+<div id="PRG-0002">
+<textarea id="PRG-0002-text-md" class="markdown">Nuestro proyecto lo haremos para un laboratorio de la universidad de Sevilla concretamente el del Departamento de Bioquímica y Biología Molecular, que se encuentra en la Facultad de Farmacia. En él, se investiga en varios proyectos, en los que participan tanto profesores, investigadores, como estudiantes de varios grados como farmacia o bioquímica y de másteres. Los proyectos principales están relacionados con el cáncer y el alzhéimer, aunque también los alumnos participantes realizan muchos trabajos fin de grado y fin de máster sobre diversos temas. Para todo esto, en el laboratorio tienen un almacén donde almacenan los productos necesarios para llevar a cabo estos proyectos, principalmente productos químicos y fungibles como guantes de protección o probetas, y es en este almacén donde se centra nuestro proyecto.</textarea>
+<div id="PRG-0002-text-html" class=""></div>
+<script>generate_markdown("PRG-0002-text");</script>
+</div>
+<h2 id="SEC-0008" class="section">2.2 Glosario de términos del dominio del problema</h2>
+<div id="PRG-0005">
+<textarea id="PRG-0005-text-md" class="markdown">- Código Identificador: Es un número que identifica únicamente a cada producto y muestra su utilidad a la hora de clasificar o consultar productos.¬¬- Código de proyecto: Es un código que está asignado a cada proyecto que lleva a cabo el laboratorio. Se usa para identificar cada proyecto.¬¬- DataSheet: Esto es un documento de texto, en formato PDF, en la que están expuestas una serie de característica de un producto determinado. Como se puede intuir, son únicas para cada tipo de producto y sirven a los usuarios para obtener información sobre ellos a la hora de usarlos.¬¬- Fungibles: Productos o bienes que hacen referencia a las cosas que se deterioran, se gastan, o se destruyen una vez son utilizados. Vienen determinados fundamentalmente por peso, medida, cantidad o precio (ej. Papeles de filtro, puntas de pipeta, guantes?)¬¬- Inmunohistoquímica: Consiste en la detección de antígenos en cortes de tejido mediante la generación de un producto visible, generado por la unión específica de anticuerpos a dicho antígeno. Se utiliza con muchos productos distintos.¬¬- Otros gastos asociados a los proyectos: Durante la realización del proyecto, existen otras obligaciones como la presentación de resultados, diseminación y publicación. Todo esto conlleva gastos extras que deben añadirse al gasto total (ej. Viajes a congresos, tasas de publicación, experimentos in vivo?).¬¬- PCR: Técnica empleada para conseguir un gran número de copias de un fragmento de ADN particular. Consiste en ciclos sucesivos de replicación de ADN en la que el producto sirve de molde para la siguiente reacción. Es una de las técnicas más utilizadas.¬¬- Pedido: Entendemos como pedido al acto de que uno de los usuarios pida al proveedor algunos de los productos que necesiten. Debido al tipo de institución al que está ligado este laboratorio, los pedidos tardan mucho en ser realizados.¬¬- Proveedor: Entendemos como proveedor a la persona que ofrece los productos pedidos por los usuarios que los encarguen. Todo producto tiene asociado un proveedor, con quien se debe contactar para realizar el pedido.¬¬- Proyecto: Describe el proyecto de investigación financiado a cada investigador. Cada proyecto tendrá una naturaleza y duración única.¬¬- Reactivos o Materiales: Todos aquellos productos que se utilizarán en las distintas técnicas de laboratorio para la correcta realización de los procesos experimentales (ej. Anticuerpos, geles, buffers?)¬¬- Stock: Es el conjunto de mercancías o productos que se tienen almacenados en espera de su venta o comercialización.</textarea>
+<div id="PRG-0005-text-html" class=""></div>
+<script>generate_markdown("PRG-0005-text");</script>
+</div>
+<h1 id="SEC-0009" class="section">3 Descripción de la situación actual</h1>
+<h2 id="SEC-0010" class="section">3.1 Pros y contras de la situación actual</h2>
+<h3 id="SEC-0011" class="section">3.1.1 Fortalezas de la situación actual</h3>
+<div id="PRG-0006">
+<textarea id="PRG-0006-text-md" class="markdown">- FOR-01: No requiere ninguna tecnología¬- FOR-02: No requiere mantenimiento (económico)¬- FOR-03: No requiere conocimiento previo¬- FOR-04: Es un sistema en el que son veteranos¬- FOR-05: Cuentan con respaldo económico de la universidad¬- FOR-06: Cuentan con participación de estudiantes en proceso de formación para mejorar su aprendizaje¬</textarea>
+<div id="PRG-0006-text-html" class=""></div>
+<script>generate_markdown("PRG-0006-text");</script>
+</div>
+<h3 id="SEC-0012" class="section">3.1.2 Debilidades de la situación actual</h3>
+<div id="PRG-0007">
+<textarea id="PRG-0007-text-md" class="markdown">- DEB-01: Se tarda en gestionar el material del laboratorio¬- DEB-02: Requiere demasiado esfuerzo (falta de automatización)¬- DEB-03: Da lugar a confusiones/conflictos¬- DEB-04: Requiere presencialidad en el laboratorio¬- DEB-05: Falta de organización, estructura algo anárquica¬- DEB-06: Falta de comunicación¬- DEB-07: No admite interacciones simultáneas¬- DEB-08: Difícil obtener información (da lugar a falta productos)¬- DEB-09: Es lento contactar con la universidad para trámites¬- DEB-10: Se generan muchos residuos¬</textarea>
+<div id="PRG-0007-text-html" class=""></div>
+<script>generate_markdown("PRG-0007-text");</script>
+</div>
+<h2 id="SEC-0013" class="section">3.2 Modelos de proceso de negocio actuales</h2>
+<h3 id="SEC-0014" class="section">3.2.1 Descripción de actores de negocio actuales</h3>
+<div id="PRG-0008">
+<textarea id="PRG-0008-text-md" class="markdown">- Usuario: Integrante del laboratorio que participa en los experimentos.¬- Proveedores: Personas u organizaciones externas al laboratorio que proporciona los productos al laboratorio.¬- Entidad financiera: Organización o particular que apoya económicamente a los proyectos.</textarea>
+<div id="PRG-0008-text-html" class=""></div>
+<script>generate_markdown("PRG-0008-text");</script>
+</div>
+<h3 id="SEC-0015" class="section">3.2.2 Descripción de procesos de negocio actuales</h3>
+<div id="PRG-0009">
+<textarea id="PRG-0009-text-md" class="markdown">- Actualizar el presupuesto de un proyecto:¬¬   Para actualizar el presupuesto de un proyecto, los integrantes de cada uno tienen una libreta donde se apuntan los gastos cargados a nombre de este, con lo cual, el proceso de actualización de un presupuesto, comienza cuando algún integrante realiza un gasto a nombre de un proyecto y lo apunta en la libreta. Tras apuntarlo, hay dos opciones, ya que si queda poco del presupuesto total y se necesita más, se debería enviar una petición a la entidad que lo financia para ampliar el presupuesto, y si la acepta actualizar el proyecto total en la libreta. En caso de que quede aún una gran parte del total o que no sea necesario más, se termina el proceso tras apuntar el gasto en la libreta.</textarea>
+<div id="PRG-0009-text-html" class=""></div>
+<script>generate_markdown("PRG-0009-text");</script>
+</div>
+<div id="GRF-0001" class="figure">
+<img class="figure_image" src=".\BPMN\ActualizarPresupuestoProyectoBPMN-Actual.png" />
+<p class="figure_caption">
+<span class="figure_caption_label">Figura 1: </span>
+<textarea id="GRF-0001-name-md" class="markdown">ActualizarPresupuestoProyectoBPMN-Actual</textarea>
+<span id="GRF-0001-name-html"></span>
+<script>generate_markdown("GRF-0001-name",true);</script>
+</p>
+</div>
+<div id="PRG-0015">
+<textarea id="PRG-0015-text-md" class="markdown">- Caducidad de un ejemplar:¬¬   Cuando un usuario del laboratorio va a usar un producto, si ve que el ejemplar está caducado, se debe deshacer de él y cambia la cantidad total de dicho producto en la libreta.</textarea>
+<div id="PRG-0015-text-html" class=""></div>
+<script>generate_markdown("PRG-0015-text");</script>
+</div>
+<div id="GRF-0002" class="figure">
+<img class="figure_image" src=".\BPMN\CaducidadEjemplarBPMN-Actual.png" />
+<p class="figure_caption">
+<span class="figure_caption_label">Figura 2: </span>
+<textarea id="GRF-0002-name-md" class="markdown">CaducidadEjemplarBPMN-Actual</textarea>
+<span id="GRF-0002-name-html"></span>
+<script>generate_markdown("GRF-0002-name",true);</script>
+</p>
+</div>
+<div id="PRG-0016">
+<textarea id="PRG-0016-text-md" class="markdown">- Hacer un pedido:¬¬   Algún integrante del laboratorio consume un cierto producto. Después comprueba si queda poca cantidad de dicho producto. Si está en ese caso, busca en internet los posibles proveedores y cuando se decida por alguno, contacta con él. Una vez que se realiza el pedido, se anota el suceso en una libreta común.</textarea>
+<div id="PRG-0016-text-html" class=""></div>
+<script>generate_markdown("PRG-0016-text");</script>
+</div>
+<div id="GRF-0003" class="figure">
+<img class="figure_image" src=".\BPMN\HacerPedidoBPMN-Actual.png" />
+<p class="figure_caption">
+<span class="figure_caption_label">Figura 3: </span>
+<textarea id="GRF-0003-name-md" class="markdown">HacerPedidoBPMN-Actual</textarea>
+<span id="GRF-0003-name-html"></span>
+<script>generate_markdown("GRF-0003-name",true);</script>
+</p>
+</div>
+<div id="PRG-0017">
+<textarea id="PRG-0017-text-md" class="markdown">- Recibir un pedido:¬¬   La recepción de un pedido comienza cuando el repartidor de la empresa de paquetería llega al laboratorio y entrega el pedido a algún usuario que esté en ese momento en el laboratorio. Esta persona, debe apuntar en la libreta que se ha recibido el pedido y editar la cantidad de los productos recibidos. Tras esto, el usuario irá al almacén a guardar los productos en su lugar correspondiente.¬¬</textarea>
+<div id="PRG-0017-text-html" class=""></div>
+<script>generate_markdown("PRG-0017-text");</script>
+</div>
+<div id="GRF-0004" class="figure">
+<img class="figure_image" src=".\BPMN\RecibirPedidoBPMN-Actual.png" />
+<p class="figure_caption">
+<span class="figure_caption_label">Figura 4: </span>
+<textarea id="GRF-0004-name-md" class="markdown">RecibirPedidoBPMN-Actual</textarea>
+<span id="GRF-0004-name-html"></span>
+<script>generate_markdown("GRF-0004-name",true);</script>
+</p>
+</div>
+<h2 id="SEC-0016" class="section">3.3 Entorno tecnológico actual</h2>
+<h3 id="SEC-0022" class="section">3.3.1 Descripción del entorno hardware actual</h3>
+<div id="PRG-0010">
+<textarea id="PRG-0010-text-md" class="markdown">Actualmente, el laboratorio tan sólo cuenta con un ordenador de sobremesa, aunque apenas se utiliza para la gestión del laboratorio. Excepcionalmente, los integrantes del laboratorio utilizan sus dispositivos móviles particulares cuando es necesario realizar una gestión digital.</textarea>
+<div id="PRG-0010-text-html" class=""></div>
+<script>generate_markdown("PRG-0010-text");</script>
+</div>
+<h3 id="SEC-0023" class="section">3.3.2 Descripción del entorno software actual</h3>
+<div id="PRG-0011">
+<textarea id="PRG-0011-text-md" class="markdown">Actualmente no se cuenta con entorno software dedicado, aparte de algunos programas que se usan muy puntualmente, como word o excel. En su gran mayoría, los procesos del laboratorio se hacen a mano. Excepcionalmente, los integrantes utilizan sus teléfonos móviles particulares, que cuentan con sistema operativo Android o iOS, para alguna gestiones o contactos con proveedores.</textarea>
+<div id="PRG-0011-text-html" class=""></div>
+<script>generate_markdown("PRG-0011-text");</script>
+</div>
+<h1 id="SEC-0017" class="section">4 Necesidades de negocio</h1>
+<h2 id="SEC-0018" class="section">4.1 Objetivos de negocio</h2>
+<div id="PRG-0012">
+<textarea id="PRG-0012-text-md" class="markdown">OBJ-001¬El sistema deberá agilizar la gestión del inventario, para poder conocer en todo momento de qué se dispone¬¬OBJ-002¬El sistema deberá minimizar el número de conflictos entre distintos pedidos del laboratorio para evitar pedidos dobles o falta de pedidos¬¬OBJ-003¬El sistema deberá agilizar la búsqueda de proveedores para poder escoger la mejor oferta de producto¬¬OBJ-004¬El sistema deberá disminuir errores que conlleven un gasto económico, para no malgastar presupuesto¬¬OBJ-005¬El sistema deberá agilizar el acceso a la información de productos, proyectos, proveedores, etc... para ahorrar tiempo de búsqueda¬¬OBJ-006¬El sistema deberá aportar mayor comodidad a la hora de planificar actividades como experimentos para evitar que se solapen</textarea>
+<div id="PRG-0012-text-html" class=""></div>
+<script>generate_markdown("PRG-0012-text");</script>
+</div>
+<h2 id="SEC-0019" class="section">4.2 Modelos de procesos de negocio a implantar</h2>
+<h3 id="SEC-0020" class="section">4.2.1 Descripción de actores de negocio a implantar</h3>
+<div id="PRG-0013">
+<textarea id="PRG-0013-text-md" class="markdown">- Usuario: Integrante del laboratorio que interactuará con la aplicación¬- Laboratorio US: Sistema de información que desarrollaremos para la gestión del laboratorio¬- Alertas: Componente de la aplicación que genera notificaciones automáticamente cuando se dan las circunstancias para que se genere¬- Proveedores: Personas u organizaciones externas al laboratorio que proporciona los productos al laboratorio</textarea>
+<div id="PRG-0013-text-html" class=""></div>
+<script>generate_markdown("PRG-0013-text");</script>
+</div>
+<h3 id="SEC-0021" class="section">4.2.2 Descripción de procesos de negocio a implantar</h3>
+<div id="PRG-0014">
+<textarea id="PRG-0014-text-md" class="markdown">- Actualizar presupuesto proyecto:¬¬   Algún integrante del proyecto modifica su presupuesto . Actualiza su valor en la página y, en caso de que el presupuesto restante quedase por debajo del 20%, salta de manera automática una alerta que notifica de esto al usuario.</textarea>
+<div id="PRG-0014-text-html" class=""></div>
+<script>generate_markdown("PRG-0014-text");</script>
+</div>
+<div id="GRF-0005" class="figure">
+<img class="figure_image" src=".\BPMN\ActualizarPresupuestoProyectoBPMN-Implementar.png" />
+<p class="figure_caption">
+<span class="figure_caption_label">Figura 5: </span>
+<textarea id="GRF-0005-name-md" class="markdown">ActualizarPresupuestoProyectoBPMN-Implementar</textarea>
+<span id="GRF-0005-name-html"></span>
+<script>generate_markdown("GRF-0005-name",true);</script>
+</p>
+</div>
+<div id="PRG-0018">
+<textarea id="PRG-0018-text-md" class="markdown">- Caducidad ejemplar:¬¬   En la página, automáticamente, se comprueba de manera diaria si existe algún ejemplar caducado. En caso de que exista alguno, se genera una alerta que notifica al usuario, este localiza el ejemplar en el sistema y lo retira (tanto fisicamente como de la base de datos), eliminandose también de forma automática la alerta asociada a dicho ejemplar.</textarea>
+<div id="PRG-0018-text-html" class=""></div>
+<script>generate_markdown("PRG-0018-text");</script>
+</div>
+<div id="GRF-0006" class="figure">
+<img class="figure_image" src=".\BPMN\CaducidadEjemplarBPMN-Implantar.png" />
+<p class="figure_caption">
+<span class="figure_caption_label">Figura 6: </span>
+<textarea id="GRF-0006-name-md" class="markdown">CaducidadEjemplarBPMN-Implantar</textarea>
+<span id="GRF-0006-name-html"></span>
+<script>generate_markdown("GRF-0006-name",true);</script>
+</p>
+</div>
+<div id="PRG-0019">
+<textarea id="PRG-0019-text-md" class="markdown">- Hacer pedido:¬¬   Cuando un usuario consume un producto, introduce la cantidad del mismo que ha tomado. La aplicación, entonces, actualiza el stock disponible. Si la cantidad restante no está por debajo del porcentaje de alerta, se termina el proceso. Si, por el contrario, queda menos que el porcentaje de alerta, la aplicación generará alertas.  Al recibir la alerta, el usuario buscará un proveedor al que encargar el producto que falta para reponer su stock. Tras los filtros correspondientes, la aplicación devolverá al usuario los detalles de los proveedores que más se ajustan a su situación. El usuario escogerá uno y contactará con él. Tras confirmar el pedido, el usuario bajará el nivel de la alerta e introducirá el nuevo pedido en la sección de pedidos. La alerta se actualiza y termina el proceso.</textarea>
+<div id="PRG-0019-text-html" class=""></div>
+<script>generate_markdown("PRG-0019-text");</script>
+</div>
+<div id="GRF-0007" class="figure">
+<img class="figure_image" src=".\BPMN\HacerPedidoBPMN-Implantar.png" />
+<p class="figure_caption">
+<span class="figure_caption_label">Figura 7: </span>
+<textarea id="GRF-0007-name-md" class="markdown">HacerPedidoBPMN-Implantar</textarea>
+<span id="GRF-0007-name-html"></span>
+<script>generate_markdown("GRF-0007-name",true);</script>
+</p>
+</div>
+<div id="PRG-0020">
+<textarea id="PRG-0020-text-md" class="markdown">- Recibir pedido:¬¬   El proveedor  envía el pedido al laboratorio. Algún integrante del laboratorio almacena fisicamente el producto. En la página el usuario marca el pedido como llegado y actualiza la cantidad del producto que ha recibido incrementando o decrementando la cantidad que tenía en ese momento. Si la cantidad que queda del producto supera el porcentaje de alerta determinado para este, se elimina la alerta de manera automática.</textarea>
+<div id="PRG-0020-text-html" class=""></div>
+<script>generate_markdown("PRG-0020-text");</script>
+</div>
+<div id="GRF-0008" class="figure">
+<img class="figure_image" src=".\BPMN\RecibirPedidoBPMN-Implementar.png" />
+<p class="figure_caption">
+<span class="figure_caption_label">Figura 8: </span>
+<textarea id="GRF-0008-name-md" class="markdown">RecibirPedidoBPMN-Implementar</textarea>
+<span id="GRF-0008-name-html"></span>
+<script>generate_markdown("GRF-0008-name",true);</script>
+</p>
+</div>
+<h1 id="SEC-0024" class="section">A Actas de reunión</h1>
+<h2 id="SEC-0025" class="section">A.A Primera reunión</h2>
+<div id="PRG-0021">
+<textarea id="PRG-0021-text-md" class="markdown">En esta reunión, estuvieron presentes:¬¬-Manuel Sarmiento Soto¬¬-Matthew Bwye Lera¬¬-Isabel Arrans Vega¬¬-Francisco Javier Beltrán Rabadán¬¬-Guillermo López Rosado¬¬Puntos a tratar:¬¬1.Resumen delos problemas que tienen en el laboratorio¬    Manolo nos explica resumidamente por qué le interesaría implementar una aplicación en el laboratorio yel principalobjetivode esta, que sería el de gestión de inventario.¬¬2.Visita a las instalaciones¬    Manolo nos enseña las instalaciones del laboratorio, haciendo especial hincapié en las partes que se quieren sustituir con la implementación de la aplicación, como los papeles donde se apuntala información de los productos, el almacéno el ordenador con el que cuenta en el laboratorio.¬¬3.Propuesta de las primeras ideas para la solución de los problemas planteados¬    Realizamos un pequeñobrainstorming, en el que tanto los componentes del grupo como Manolo, proponemos posibles soluciones a los problemas planteados, para intentar hacernos una primera idea de lo que se podría implementar en la aplicación.¬¬4.Solicitud de documento¬    Solicitamos a Manolo que nosescriba un correo explicando más detalladamente los problemasque se han hablado en la reunión, además de incluir otros posibles problemas que se le pudieran ocurrir tras esta.</textarea>
+<div id="PRG-0021-text-html" class=""></div>
+<script>generate_markdown("PRG-0021-text");</script>
+</div>
+<h2 id="SEC-0026" class="section">A.B Reunión 2020</h2>
+<div id="PRG-0022">
+<textarea id="PRG-0022-text-md" class="markdown">Asistentes:¬¬Por la representación de Aleatorio US:¬¬- Francisco Javier Beltrán Rabadán¬- Guillermo López Rosado¬- Isabel Arrans Vega¬- Matthew Bwye Lera¬¬Por la representación del Departamento de Biología y Bioquímica Molecular:¬¬- Manuel Sarmiento Soto¬¬Orden del día:¬¬1.Introducción a la reunión¬¬2.Prototipo de la aplicación¬¬3.Solicitud de documentos e imágenes de interés¬¬4.Contextualización dela situación actual¬¬5.Pedir propuestas nuevas para la aplicación al cliente¬¬6.Conclusiones de la reunión¬¬Resumen de cada uno de los puntos:¬¬1.Matthew Bwye hace una explicación de los nuevos criterios buscados, es decir, ampliación de los requisitos y mayor detalle en los mismos. Manuel pregunta acerca de detalles de la asignatura, por ejemplo, si usamos alguna plantilla para guiarnos, parasaber cómo darnos información de la forma más eficiente posible, y le respondemos adecuadamente.¬¬2.Guillermo López muestra un prototipo de la aplicación. A raíz de esto, surgen nuevas ideas para requisitos y mayor cantidad de detalles en los que ya estaban planteados.¬¬3.Aleatorio US debía realizar una presentación del proyecto en los próximos días y además debían presentar documentación a la semana siguiente. Se le hizo una introducción de lo que se necesitaba a Manuel, para que pudiese aportarnos la documentación y archivos necesarios para complementar nuestro trabajo. Manuel accedió a redactar un documento, y a reunir información gráfica del sistema actual.María Teresa Sánchez, una de las integrantes del laboratorio, y punto de conexión entre Aleatorio US y Manuel, sería la encargada de proveer las imágenes necesarias.¬¬4.Para reunir más detalles, Manuel trató de explicar la situación actual del laboratorio, poniendo varios ejemplos, tanto de situaciones de confusión y conflicto debido a la falta de sincronía, como de herramientas muy analógicas que actualmente usan.¬¬5.Los integrantes de Aleatorio US añadieron que podían ampliar el alcance del proyecto, dando lugar a que Manuel pudiese pensar en nuevas vías que nuestra aplicación pudiera tomar. Manuel añadió ejemplos de laboratorios que visitó en el extranjero, por ejemplo, en Oxford, explicando los sistemas de gestión que usaban ahí. Además, se mencionó la posibilidad de ampliar el sistema para cubrir nuevas áreas debidoa la situación actual de pandemia.</textarea>
+<div id="PRG-0022-text-html" class=""></div>
+<script>generate_markdown("PRG-0022-text");</script>
+</div>
+<h1 id="SEC-0027" class="section">B Documentación relevante</h1>
+<h2 id="SEC-0032" class="section">B.A Correo de Manuel Sarmiento</h2>
+<div id="PRG-0026">
+<textarea id="PRG-0026-text-md" class="markdown">Buenas, os explico los problemas que tenemos en el laboratorio. Lo principal que queremos resolver es que tenemos muchísimos productos diferentes, cada uno con un montón de botes, así que es muy difícil controlar la cantidad que queda de cada uno, y acabamos p r no darnos cuenta de que se está gastando hasta que ya lo ha hecho, y eso retrasa los proyectos, porque a lo mejor te hace falta cierto producto y no hay, y cuando lo pides, entre el papeleo y el envío, puede tardar 2 o 3 semanas, y todo ese tiempo está el proyecto parado esperando a que llegue.  Otro problema relacionado con ese es que nos es difícil tener a mano la información de los pedidos que están ya hechos, y nos ha pasado varias veces que pedimos un producto al ver que está vacío y a lo mejor a los dos días alguien nos dice que él ya lo había pedido, y acabamos con una cantidad de ese producto que no vamos a gastar, y puede acabar caducándose. También hay otras cosas que no nos causan demasiados problemas pero que creo  que se podrían incluir en la aplicación. Sobre todo poder ver detalles sobre los proyectos que se están llevando a cabo en el laboratorio y sobre los proveedores de los productos, que a veces nos cuesta decidir los que más compensan, y yo diría que eso sería lo principal que nos gustaría tener, os volveré a escribir si pienso alguna otra cosa.¬</textarea>
+<div id="PRG-0026-text-html" class=""></div>
+<script>generate_markdown("PRG-0026-text");</script>
+</div>
+<h2 id="SEC-0028" class="section">B.B Documento de esperanzas de cambios</h2>
+<h3 id="SEC-0029" class="section">B.B.A Introducción</h3>
+<div id="PRG-0023">
+<textarea id="PRG-0023-text-md" class="markdown">¬¬En este documento quedarán redactados los cambios que esperemos que queden realizados en nuestro laboratorio una vez implementada la aplicación Laboratorio US.¬¬El formato será un listado de las situaciones actuales que esperan ser cambiadas,  y luego otro listado mostrando la versión nueva que esperamos tener de estas situaciones.¬¬</textarea>
+<div id="PRG-0023-text-html" class=""></div>
+<script>generate_markdown("PRG-0023-text");</script>
+</div>
+<h3 id="SEC-0030" class="section">B.B.B Situación Actual</h3>
+<div id="PRG-0024">
+<textarea id="PRG-0024-text-md" class="markdown">- Gestión analógica del inventario: Para tener un registro de los productos que tenemos, generalmente consultamos físicamente los productos que queden. Sin embargo, para agilizar esto, hacemos uso de libretas y post-its para anotar los cambios que vayamos aplicando, así, simplemente con consultar la libreta podemos saber la situación de nuestro inventario.¬¬- Consulta dispersa de proveedores: No tenemos ningún tipo de base de datos para los proveedores. Tenemos apuntados los catálogos en una libreta, pero tenemos que consultarlos uno a uno para encontrar el mejor para determinados productos.¬¬- Incertidumbre respecto a los pedidos: Tenemos una libreta para anotar los pedidos, para que quede constancia de ellos, y así no haya dos integrantes pidiendo el mismo producto. Sin embargo, no siempre se consulta, y da lugar a confusiones.¬¬- Problemas varios: Es frecuente que existan conflictos al realizar pedidos, o que se agote un producto justamente en mitad de un experimento, o que el presupuesto de un proyecto esté medianamente bajo y no seamos del todo conscientes de ello. Con el sistema actual, estos problemas son inevitables.</textarea>
+<div id="PRG-0024-text-html" class=""></div>
+<script>generate_markdown("PRG-0024-text");</script>
+</div>
+<h3 id="SEC-0031" class="section">B.B.C Situación futura</h3>
+<div id="PRG-0025">
+<textarea id="PRG-0025-text-md" class="markdown">- Gestión digital del inventario: Tendremos un sistema que permita la consulta rápida de los productos, y en cualquier momento. Esto nos permitirá planificar experimentos antes de estar en el laboratorio, y comprobar si hay algo fuera de lugar mucho más rápidamente.¬¬- Consulta eficaz de proveedores: En la aplicación esperamos poder visualizar muy rápidamente a los proveedores y filtrar de forma eficaz, por producto o precio. También esperamos poder contactar más ágilmente con ellos, con accesos directos a sus correos electrónicos.¬¬- Historial de pedidos: Con esta aplicación, podremos registrar los pedidos que realizamos, pudiendo revisar más rápidamente si otro usuario ha realizado el pedido que queremos realizar.¬- Sistema de alertas: Ante cualquier otro tipo de problema, se espera que se implemente un sistema de alertas, que avise de cuando un producto se está agotando, de cuando un ejemplar caduque, o de cuando un proyecto tiene presupuesto bajo, permitiéndonos obrar con mayor margen de maniobra ante estos problemas. Además, un usuario puede avisar de que ya ha visto la alerta y la está controlando, para que así dos usuarios no actúen simultáneamente respecto a una misma alerta.</textarea>
+<div id="PRG-0025-text-html" class=""></div>
+<script>generate_markdown("PRG-0025-text");</script>
+</div>
+<h1 id="SEC-0033" class="section">C Glosario de acrónimos y abreviaturas</h1>
+<div id="PRG-0027">
+<textarea id="PRG-0027-text-md" class="markdown">- US: Universidad de Sevilla¬¬- PCR: Polymerase Chain Reaction (Reacción en Cadena de la Polimerasa en español)¬¬- ADN: ácido desoxirribonucleico¬¬- BPMN: Business Process Model and Notation¬</textarea>
+<div id="PRG-0027-text-html" class=""></div>
+<script>generate_markdown("PRG-0027-text");</script>
+</div>
+<div id="PRG-0028">
+<textarea id="PRG-0028-text-md" class="markdown">¬¬¬</textarea>
+<div id="PRG-0028-text-html" class=""></div>
+<script>generate_markdown("PRG-0028-text");</script>
+</div>
+<div id="ORG-0001">
+<table class="organization remus_table">
+<thead>
+<tr>
+<th>
+<img src="https://cdn.jsdelivr.net/gh/amador-duran-toro/remus/assets/images/icons/organization.png" /> Organización</th>
+<th class="name_column" colspan="1">Laboratorio de la US</th>
+</tr>
+</thead>
+<tr>
+<th>Dirección</th>
+<td colspan="1">
+<textarea id="ORG-0001-address-md" class="markdown">Facultad de Farmacia</textarea>
+<div id="ORG-0001-address-html" class=""></div>
+<script>generate_markdown("ORG-0001-address");</script>
+</td>
+</tr>
+<tr>
+<th>Comentarios</th>
+<td colspan="1">
+<textarea id="ORG-0001-comments-md" class="markdown">Laboratorio de investigación del departamento de Bioquímica y Biología Molecular, al que pertenece nuestro cliente</textarea>
+<div id="ORG-0001-comments-html" class="remus_comments"></div>
+<script>generate_markdown("ORG-0001-comments");</script>
+</td>
+</tr>
+</table>
+</div>
+<div id="ORG-0002">
+<table class="organization remus_table">
+<thead>
+<tr>
+<th>
+<img src="https://cdn.jsdelivr.net/gh/amador-duran-toro/remus/assets/images/icons/organization.png" /> Organización</th>
+<th class="name_column" colspan="1">Aleatorio US (Nosotros)</th>
+</tr>
+</thead>
+<tr>
+<th>Dirección</th>
+<td colspan="1">
+<textarea id="ORG-0002-address-md" class="markdown">/</textarea>
+<div id="ORG-0002-address-html" class=""></div>
+<script>generate_markdown("ORG-0002-address");</script>
+</td>
+</tr>
+<tr>
+<th>Comentarios</th>
+<td colspan="1">
+<textarea id="ORG-0002-comments-md" class="markdown">Isabel Arrans Vega, Francisco Javier Beltrán Rabadán, Matthew Bwye Lera, Guillermo López Rosado</textarea>
+<div id="ORG-0002-comments-html" class="remus_comments"></div>
+<script>generate_markdown("ORG-0002-comments");</script>
+</td>
+</tr>
+</table>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script>
+            // set tooltips of rem:ref references to glossary items or class supertypes
+            $( ".rem_ref" ).each( function () {
+                var sharp_position = this.href.lastIndexOf("#");
+                var id_glossary_item = this.href.substring( sharp_position + 1 ) + "-text-html";
+                var id_supertype = this.href.substring( sharp_position + 1 ) + "-description-html";
+
+                // some rem:refs to use cases do not have -text-html elements
+                if ( document.getElementById( id_glossary_item ) )
+                    this.title = document.getElementById( id_glossary_item ).innerText;
+
+                else if ( document.getElementById( id_supertype ) )
+                    this.title = document.getElementById( id_supertype ).innerText;
+            });
+
+            // set tooltips of rem:tbd elements
+            $( ".tbd" ).each( function () {
+                this.title = 'Por determinar';
+            });
+
+            // show warnings (if any)
+            if ( warnings.length ) {
+                var warning_list = $("<ul></ul>");
+                for ( var i = 0; i < warnings.length; i++ ) {
+                    var warning = warnings[ i ];
+                    var warning_link = $('<a href="#' + warning.oid + '">' + warning.oid + '</a>' );
+                    var warning_message = ": " + warning.message;
+                    var warning_item = $("<li></li>").append(warning_link, warning_message);
+
+                    warning_list.append( warning_item );
+                }
+                $("#warning_messages").append( warning_list );
+                $("#warning_container").show();
+            }
+
+            // manage traceability matrices buttons
+            function update_font_size( parent_table, size )
+            {
+                var matrix_columns = parent_table.find( "th.matrix_column" );
+                var font_size = parseInt( matrix_columns.eq(0).css( "font-size" ), 10 );
+
+                matrix_columns.css( "font-size", font_size + size );
+            }
+
+            $( "button.reduce_font" ).click( function() {
+                var parent_table = $(this).parents( "table.traceability_matrix" );
+                update_font_size( parent_table, -1 );
+            });
+
+            $( "button.increase_font" ).click( function() {
+                var parent_table = $(this).parents( "table.traceability_matrix" );
+                update_font_size( parent_table, 1 );
+            });
+        </script>
+<script src="https://cdn.jsdelivr.net/gh/amador-duran-toro/remus/assets/javascripts/ie7-shim-min-width.js"></script>
+<script>
+            fixMinWidthForIE();
+        </script>
+</body>
+</html>
