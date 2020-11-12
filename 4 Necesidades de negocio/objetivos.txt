@@ -1,0 +1,17 @@
+OBJ-0001
+El sistema deberá agilizar la gestión del inventario, para poder conocer en todo momento de qué se dispone
+
+OBJ-0002
+El sistema deberá minimizar el número de conflictos entre distintos pedidos del laboratorio para evitar pedidos dobles o falta de pedidos
+
+OBJ-0003
+El sistema deberá agilizar la búsqueda de proveedores para poder escoger la mejor oferta de producto
+
+OBJ-0004
+El sistema deberá disminuir errores que conlleven un gasto económico,para no malgastar presupuesto
+
+OBJ-0005
+El sistema deberá agilizar el acceso a la información de productos,proyectos, proveedores, etc... para ahorrar tiempo de búsqueda
+
+OBJ-006
+El sistema deberá aportar mayor comodidad a la hora de planificar actividades como experimentos para evitar que se solapen
