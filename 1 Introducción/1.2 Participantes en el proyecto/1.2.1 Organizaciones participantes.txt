@@ -1,1 +1,2 @@
-La única organización participante es el departamento de biología y bioquímica molecular de la facultad de farmacia, que son los clientes a los que les vamos a hacer la aplicación.
+- Laboratorio de farmacia: Laboratorio pertenenciente al departamento de biología y bioquímica molecular de la facultad de farmacia de la US. Son los clientes para los que vamos a desarrollar la aplicación.
+- Aleatorio US (nosotros): Equipo de estudiantes de la asignatura IR (grado IISW de la US), encargados de desarrollar la aplicación para el laboratorio.
