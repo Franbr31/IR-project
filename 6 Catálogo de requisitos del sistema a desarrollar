@@ -1,0 +1,285 @@
+-----------------------------------------------6.3 requisitos funcionales
+
+----------------------Requisitos información
+
+RI-000-Información sobre los proveedores
+--------------------------------------------
+El sistema deberá almacenar información sobre los proveedores. En concreto, las personas de contacto con la 
+empresa, el nombre y el teléfono, una descripción detallada, una descripción resumida, una foto
+ y la información sobre los productos que esta provee.
+
+
+RI-001- Información sobre la persona de contacto de la empresa
+-----------------------------------------------------------------
+El sistema deberá almacenar información sobre las personas de contacto de la empresa.
+En concreto, su nombre, su teléfono y su correo electrónico.
+
+
+RI-002- Información sobre los productos
+----------------------------------------------------------------
+El sistema deberá disponer de la siguiente información de los productos: 
+nombre o nombres, descripción, una foto, ejemplares de este producto, técnicas en las que se utiliza 
+el producto, si es reactivo o fungible, porcentaje que debe quedar para que salte la alerta,
+ejemplares asociados a ese producto, su código, si es peligroso (sólo si es un reactivo), 
+el documento PDF asociado, el link (sólo si es fungible) en caso de que haya y el proveedor 
+del producto.
+
+RI-003- Información sobre las técnicas
+------------------------------------------------------------------
+El sistema deberá almacenar información sobre las técnicas empleadas en el laboratorio.
+En concreto, el nombre de la técnica y qué productos se emplean en ella.
+
+
+RI-004- Información sobre los ejemplares
+-------------------------------------------------------------------
+El sistema deberá almacenar información sobre los ejemplares de los productos.
+En concreto, el código del ejemplar, fecha de caducidad, si está o no caducado, 
+su cantidad inicial y su cantidad restante.
+
+RI-005- Información sobre los usuarios
+--------------------------------------------------------------------
+El sistema deberá almacenar información sobre los integrantes del laboratorio.
+En concreto, el sistema deberá almacenar: nombre, apellidos,  apodo, qué tipo de usuario 
+son (jefe de grupo, profesor titular, profesor contratado doctor, investigador senior o 
+investigador junior), una descripción, un email, una foto y su contraseña.
+
+RI-006 - Información sobre los cambios en stock
+--------------------------------------------------------------------
+El sistema deberá almacenar información sobre los cambios en el stock de los productos.
+En concreto, el ejemplar que se ha utilizado, cuánto utilizó, cuándo se ha realizado el 
+cambio y quién lo realizó.
+
+
+I-007-Información sobre los proyectos
+------------------------------------------------------
+El sistema debe almacenar la siguiente información de los proyectos:
+código del proyecto, personas asociadas al proyecto, entidad que lo financia, cantidad de dinero del presupuesto y cantidad de dinero gastado, las fechas de inicio y de fin, las partidas asociadas, los créditos y las alertas.
+
+RI-008- Información sobre pedido
+------------------------------------------------------
+El sistema debe almacenar la siguiente información de los pedidos:
+productos que se piden, fecha, cantidad y precio de cada producto, precio total de la compra, proveedor al que se le compra, persona o proyecto que ha hecho el encargo y el albarán asociado al pedido.
+
+RI-009-Información sobre retiradas de ejemplares
+------------------------------------------------------
+El sistema debe almacenar la siguiente información de las retiradas de ejemplares:
+qué ejemplar fue retirado, quién lo retiró y cuándo ocurrió la retirada.
+
+RI-010-- Información de las partidas
+------------------------------------------------------
+El sistema deberá almacenar información sobre las partidas. En concreto, su nombre,
+a qué proyecti están asociadas, el dinero que tiene asociado y la cantidad de dinero restante.
+
+
+
+RI-011-- Información de los créditos
+------------------------------------------------------
+El sistema de información, deberá almacenar todos los créditos que tiene cada proyecto, 
+De cada uno de los créditos se debe almacenar la cantidad de dinero total, la restante
+y con qué proveedor se tiene el crédito.
+
+
+
+
+----------------------Reglas de negocio
+
+RN-000 Gestión de Alertas
+---------------------------------------------------------------
+El sistema deberá respetar la siguiente regla de negocio: cuando el porcentaje actual 
+de un producto sea menor que su porcentaje de alerta, saltará una alerta y esta no 
+desaparecerá hasta que el porcentaje actual sea mayor que el porcentaje de alerta, es
+decir, hasta que no haya constancia en la aplicación de la recepción de un pedido y su
+consecuente aumento de stock.
+
+RN-001- Realizador del pedido
+--------------------------------------------------------
+El sistema deberá respetar la siguiente regla de negocio:
+Un pedido lo debe realizar siempre o un proyecto o una persona.
+
+RN-002- Cambios de cantidad
+--------------------------------------------------------
+El sistema deberá respetar la siguiente regla de negocio:
+No se puede usar un ejemplar si no hay cantidad disponible.
+
+
+RN-003-Caducidad de los productos
+------------------------------------------------------
+El sistema deberá respetar la siguiente regla de negocio:
+Cuando la fecha del sistema sea mayor a la fecha de caducidad de ejemplar, debe saltar 
+una alarma para alertar al usuario sobre este.
+
+RN-004-Correspondencia Cantidad Producto/Ejemplar
+------------------------------------------------------
+El sistema deberá respetar la siguiente regla de negocio:
+La cantidad total del producto debe coincidir con la suma de las cantidades de sus ejemplares.
+
+RN-005-Porcentaje Actual
+------------------------------------------------------
+El sistema deberá respetar la siguiente regla de negocio:
+El porcentaje actual del producto se debe calcular respecto a la cantidad definida en 
+cantidadCompleta.
+
+RN-006-Presupuesto de un proyecto
+------------------------------------------------------
+El sistema deberá respetar la siguiente regla de negocio:
+El presupuesto total del proyecto se calcula con la suma de dinero de las 
+diferentes partidas asociadas a este.
+
+RN-007 Detalles de los proyectos
+------------------------------------------------------
+El sistema deberá respetar la siguiente regla de negocio:
+Sólo una persona perteneciente a un proyecto podrá ver los detalles y las partidas correspondientes a este.
+
+-----(Añadir más?)
+
+----------------------Requisitos de conducta (funcionales)
+
+
+RC-000-Pestañas 1
+------------------------------------------------------
+El sistema debe poder distinguir los productos entre reactivos y fungibles mediante
+un sistema de pestañas.
+
+RC-001-Pestañas 2
+------------------------------------------------------
+El sistema debe poder distinguir los productos según la técnica en la que se emplean,
+mediante un sistema de pestañas.
+
+
+RC-002-Cambios de Stock
+------------------------------------------------------
+
+El sistema debe cambiar el stock de un producto cuando se consuma y guardar en un
+historial quién cambió el stock, qué cantidad cambió, cuándo, de qué ejemplar y de
+qué producto.
+
+RC-003 Los pedidos
+------------------------------------------------------
+El sistema debe mostrar al usuario quiero saber el precio de un pedido, 
+el producto pedido, la cantidad pedida y cuándo se realiza un pedido, la persona
+ o proyecto que realiza el pedido y el proveedor del producto.
+
+RC-004 Los proyectos
+------------------------------------------------------
+El sistema debe mostrar quiénes son las personas que forman parte de los proyecto, 
+junto con el presupuesto disponible, la fecha en la que se inició el proyecto, 
+la fecha en la que acaba, qué entidad lo ha financiado y cuánto dinero lleva gastado.
+
+RC-005 Filtros
+------------------------------------------------------
+El sistema debe quiero poder filtrar la lista de productos por sus nombres, sus códigos o si es peligroso o no (en caso de que sea un reactivo)
+
+RC-006 Detalles del producto
+------------------------------------------------------
+El sistema debe permitir al usuario poder ver los nombres de un producto, su descripción, sus técnicas empleadas, su cantidad restante, su cantidad restante en porcentaje, su código
+
+RC-007 Visualización de alertas de inventario
+------------------------------------------------------
+El sistema deber permitir poder ver el producto alertado y tener un acceso rápido a él
+
+RC-008 Visualización de alertas de inventario
+------------------------------------------------------
+El sistema debe permitir poder ver el proyecto alertado y tener un acceso rápido a él.
+
+RC-009 Ordenamiento de los productos
+------------------------------------------------------
+El sistema debe poder alterar el orden de los productos mostrados, según su nombre (orden alfabético), su cantidad relativa o su código (primero por orden numérico y luego alfabético, en función de si su primer carácter es un número o una letra), siendo la forma predeterminada ordenar por código
+
+RF-010- Ejemplares caducados
+------------------------------------------------------
+El sistema debe poder filtrar los ejemplares en función de si está caducado.
+
+RF-011- Los pedidos en un determinado espacio de tiempo
+------------------------------------------------------
+El sistema debe permitir consultar los pedidos realizados entre dos fechas concretas.
+
+RF-012- Proyectos resumido
+------------------------------------------------------
+El sistema debe mostrar la información de un proyecto de forma reducida, pudiendo consultar solo los datos esenciales.
+
+RF-013- Personas de un proyecto
+------------------------------------------------------
+El sistema debe mostrar la lista de las personas que participan en un proyecto concreto.
+
+RF-014- Proyectos con menos presupuesto
+------------------------------------------------------
+El sistema debe mostrar una lista de los proyectos con un presupuesto menor que el indicado por el usuario.
+
+RF-015- Ejemplares
+------------------------------------------------------
+El sistema debe mostrar una lista de todos los ejemplares asociados a un producto.
+
+RF-016- Integrantes
+------------------------------------------------------
+El sistema debe mostrar una lista de todos los integrantes del laboratorio.
+
+RF-017- Personas de contacto
+------------------------------------------------------
+El sistema debe mostrar una lista de todas las personas de contacto asociadas a un proveedor concreto.
+
+RF-018- Proveedores
+------------------------------------------------------
+El sistema debe mostrar una lista de los proveedores que colaboran con el laboratorio.
+
+RF-019- Productos provistos por un proveedor
+------------------------------------------------------
+El sistema debe mostrar una lista de los productos que provee el proveedor seleccionado.
+
+
+
+
+
+
+
+
+-------------------------------------------------------------------------
+-------------------------------------------------------------------------
+-----------------------------------------------6.4 requisitos no funcionales
+--------------------Fiabilidad
+
+
+RNF-001 Disponibilidad
+-------------------------------
+El sistema deberá ser accesible las 24 horas del día durante todos los días del año
+
+
+--------------------Usabilidad
+
+
+RNF-004-Usabilidad
+------------------------------------------------------
+El sistema deberá mostrar los distintos filtros de forma sencilla y concisa.
+
+
+--------------------Mantenibilidad
+
+RNF-005-Mantenimiento
+------------------------------------------------------
+El sistema deberá, en caso de que se incluyan nuevos productos en el catálogo, permitir el acceso a ellos.
+
+
+--------------------Eficiencia
+
+
+RNF-002 Eficiencia
+-------------------------------
+El sistema deberá tardar en mostrar todos los productos menos de 3 segundos
+
+
+RNF-003-Eficiencia II
+------------------------------------------------------
+El sistema deberá permitir cambiar rápidamente entre filtros, pestañas y ordenación.
+
+
+
+--------------------Portabilidad
+
+RNF-006-Portabilidad
+------------------------------------------------------
+El sistema deberá ser accesible desde dispositivos con sistema operativo Android, IOS, Windows y Linux.
+
+--------------------Seguridad
+
+RNF-000 Control de acceso
+-------------------------------
+El sistema sólo deberá dejar paso a aquellas personas integrantes del laboratorio
