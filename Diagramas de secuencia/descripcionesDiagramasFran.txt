@@ -1,0 +1,12 @@
+dar de alta integrante:
+  El jefe de proyecto, usuario que tiene autorización para ejecutar dicha tarea, accede a la lista   de proyectos, la interfaz solicita los proyecto para posteriormente mostrarlos por pantalla. El   jefe de proyecto selecciona otro y el sistema consulta sus detalles, mostrandolos después.   Escribe el nombre del nuevo integrante y hace click en añadir. Por último el sistema añadira al   integrante y mostrara de nuevo los detalles del proyecto con el nuevo miembro.
+
+editar y consultar alertas:
+  El usuario accede a la vista de alertas y el sistema solicita dicha lista para después mostrarla   por pantalla. Si el usuario decide bajar el nivel de alerta, pulsa el botón de bajada y el   sistema baja el nivel, mostrandolo después por pantalla. En caso de que decida subir el nivel, el   usuario realizará los mismo pasos a excepción de que pulsara sobre el boton de subida y el   sistema subirá el nivel de la alerta.
+
+crear partida:
+  El jefe de proyecto, usuario que tiene autorización para ejecutar dicha tarea, accede a los   detalles de dicho proyecto, la interfaz solicita los detalles para posteriormente mostrarlos por   pantalla. Ahora este accede a las partidas, el sistema las busca en la base de datos y las   muestra por pantalla. Pulsa el botón de creación de partida, el sistema le devuelve el formulario   y este lo rellena enviandolo después. El sistema guardara la partida y confirmara el cambio   mostrando el proyecto.
+
+editar partida:
+  El jefe de proyecto, usuario que tiene autorización para ejecutar dicha tarea, accede a los   detalles de dicho proyecto, la interfaz solicita los detalles para posteriormente mostrarlos por   pantalla. Ahora este accede a las partidas, el sistema las busca en la base de datos y las   muestra por pantalla. Pulsa el botón de edición de partida, el sistema solicita los detalles de la partida y devuelve el formularios con dichos detalles en los campos de este. Este lo rellena enviandolo después. El sistema guardara la partida y confirmara el cambio mostrando el proyecto.
+  
